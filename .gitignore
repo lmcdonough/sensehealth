@@ -61,4 +61,4 @@ target/
 /bin
 /include
 /lib
-
+/sensehealth/sensehealth/dbconfig.py
