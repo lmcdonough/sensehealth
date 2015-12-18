@@ -27,7 +27,7 @@ class BandSerializer(serializers.ModelSerializer):
 
 	pk = serializers.CharField(read_only=True)   
 	created_by = serializers.ReadOnlyField(source='user.username')
-	category = serializers.ReadOnlyField(source='category.name')
+	category = serializers.HyperlinkedRelatedField(view_name='category-detail', queryset=Category.objects.all())
 
 	class Meta:
 			model = Band
@@ -38,7 +38,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 	'''The Album serializer, pretty straight forward, serializes and deserializes Album objects.'''
 
 	pk = serializers.CharField(read_only=True)   
-	band = serializers.HyperlinkedRelatedField(view_name='band-detail', read_only=True)
+	band = serializers.HyperlinkedRelatedField(view_name='band-detail', queryset=Band.objects.all())
 
 	class Meta:
 			model = Album
@@ -49,7 +49,7 @@ class SongSerializer(serializers.ModelSerializer):
 	'''The Song serializer, pretty straight forward, serializes and deserializes Song objects.'''
 
 	pk = serializers.CharField(read_only=True)   
-	album = serializers.HyperlinkedRelatedField(view_name='album-detail', read_only=True)
+	album = serializers.HyperlinkedRelatedField(view_name='album-detail', queryset=Album.objects.all())
 
 	class Meta:
 			model = Song
