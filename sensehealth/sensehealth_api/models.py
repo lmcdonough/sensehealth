@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
 	name = models.CharField(max_length=200, blank=False, null=False)
 	# created_by = models.ForeignKey(User, related_name='category')
-	
+
 	class Meta:
 		ordering = ('name',)
 		app_label = 'sensehealth_api'
