@@ -67,14 +67,16 @@ class BandViewSet(viewsets.ModelViewSet):
         and assigns the user to the action'''
 
         serializer.save(created_by=self.request.user)
+    
+    def get_queryset(self):
+        '''handles the queryset and any query parameters to filter reviews by band.'''
 
-    # def get_queryset(self):
-    #     '''handles the queryset and any query parameters to filter reviews by establishment.'''
+        category = self.request.query_params.get('category', None)
+        queryset = self.queryset
 
-    #     establishment = self.request.query_params.get('establishment', None)
-    #     if establishment is not None:
-    #         self.queryset = self.queryset.filter(establishment=establishment).order_by('-created')
-    #     return self.queryset
+        if category:
+            queryset = queryset.filter(category__name=category).order_by('name')
+        return queryset
 
 
 class AlbumViewSet(viewsets.ModelViewSet):
@@ -95,6 +97,17 @@ class AlbumViewSet(viewsets.ModelViewSet):
         serializer.save()
 
 
+    def get_queryset(self):
+        '''handles the queryset and any query parameters to filter reviews by band.'''
+
+        band = self.request.query_params.get('band', None)
+        queryset = self.queryset
+
+        if band:
+            queryset = queryset.filter(band__name=band).order_by('-release_date')
+        return queryset
+
+
 class SongViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
@@ -111,4 +124,18 @@ class SongViewSet(viewsets.ModelViewSet):
         and assigns the user to the action'''
 
         serializer.save()
+
+    def get_queryset(self):
+        '''handles the queryset and any query parameters to filter reviews by band.'''
+
+        album = self.request.query_params.get('album', None)
+        band = self.request.query_params.get('band', None)
+        queryset = self.queryset
+
+        if album:
+            queryset = queryset.filter(album__name=album).order_by('track_num')
+        if band:
+            queryset = queryset.filter(album__band__name=band).order_by('album__name', 'track_num')
+        return queryset
+
 
