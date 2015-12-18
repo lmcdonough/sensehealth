@@ -41,7 +41,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsAdminUser)
+                          IsOwnerOrReadOnly)
 
 
     def perform_create(self, serializer):
@@ -135,7 +135,7 @@ class SongViewSet(viewsets.ModelViewSet):
         if album:
             queryset = queryset.filter(album__name=album).order_by('track_num')
         if band:
-            queryset = queryset.filter(album__band__name=band).order_by('album__name', 'track_num')
+            queryset = queryset.filter(album__band__name=band).order_by('-album__release_date', 'track_num')
         return queryset
 
 
