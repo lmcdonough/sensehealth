@@ -11,8 +11,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-	'''The category serializer, in the future admins should be able to create categories
-	for users to associate their establishments with, eg. Landmarks, Bars, Restaurants...'''
+	'''The Category Serializer, serializes the Category objects.'''
 
 	pk = serializers.CharField(read_only=True)
 	name = serializers.CharField(required=True, allow_blank=False, max_length=200)
