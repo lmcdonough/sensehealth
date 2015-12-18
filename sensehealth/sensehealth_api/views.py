@@ -54,7 +54,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class BandViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
+    `update` and `destroy` actions for Band objects.
     """
     queryset = Band.objects.all()
     serializer_class = BandSerializer
@@ -69,7 +69,7 @@ class BandViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
     
     def get_queryset(self):
-        '''handles the queryset and any query parameters to filter reviews by band.'''
+        '''handles the queryset and any query parameters to filter bands by category.'''
 
         category = self.request.query_params.get('category', None)
         queryset = self.queryset
@@ -82,7 +82,7 @@ class BandViewSet(viewsets.ModelViewSet):
 class AlbumViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
+    `update` and `destroy` actions for Album objects.
     """
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
@@ -91,14 +91,13 @@ class AlbumViewSet(viewsets.ModelViewSet):
 
 
     def perform_create(self, serializer):
-        '''handles the saving of the serializer, 
-        and assigns the user to the action'''
+        '''handles the saving of the serializer.''
 
         serializer.save()
 
 
     def get_queryset(self):
-        '''handles the queryset and any query parameters to filter reviews by band.'''
+        '''handles the queryset and any query parameters to filter albums by band.'''
 
         band = self.request.query_params.get('band', None)
         queryset = self.queryset
@@ -111,7 +110,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
 class SongViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
+    `update` and `destroy` actions for Songs.
     """
     queryset = Song.objects.all()
     serializer_class = SongSerializer
@@ -120,13 +119,12 @@ class SongViewSet(viewsets.ModelViewSet):
 
 
     def perform_create(self, serializer):
-        '''handles the saving of the serializer, 
-        and assigns the user to the action'''
+        '''handles the saving of the serializer.'''
 
         serializer.save()
 
     def get_queryset(self):
-        '''handles the queryset and any query parameters to filter reviews by band.'''
+        '''handles the queryset and any query parameters to filter Songs by Band and or Album.'''
 
         album = self.request.query_params.get('album', None)
         band = self.request.query_params.get('band', None)
