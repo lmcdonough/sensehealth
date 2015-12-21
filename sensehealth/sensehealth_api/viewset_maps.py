@@ -1,13 +1,11 @@
-import views
 
 class CustomViewSet(object):
 
 	@staticmethod
 	def register(viewset, viewset_type):
-		try:
-			return viewset.as_view(viewset_type)
-		except:
-			pass
+
+		return viewset.as_view(viewset_type)
+
 
 
 class ViewSetType(object):
